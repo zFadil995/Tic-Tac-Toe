@@ -150,5 +150,4 @@ void PlayerVsPlayer()
 void PlayerVsComputer()
 {
 	cout << "In development :)\n";
-	cout << "just for a branch :D \n";
 }
