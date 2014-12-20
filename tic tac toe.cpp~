@@ -2,7 +2,7 @@
 #define size 3
 using namespace std;
 
-char choosePlayer()//Just a test...
+char choosePlayer()
 {
 	char player;
 	do{
