@@ -2,7 +2,9 @@
 using namespace std;
 
 char playerOne, playerTwo, pComp;
+int choice;
 
+void game();
 void chooseSign();
 void printBoard(char TicTacToe[3][3]);
 void populateMatrix(char TicTacToe[3][3]);
@@ -14,18 +16,25 @@ void checkWinner(char TicTacToe[3][3]);
 void PlayerVsPlayer();
 void PlayerVsComputer();
 
-void main()
+int main()
 {
-	int choice = 0;
+	game();
+	return 0;
+}
+
+void game()
+{
+	choice = 0;
 	do{
-		cout << "Choose: \n1 for a local multipayer game\n2 for a player vs computer game\n"; cin >> choice;
+		system("CLS");
+		cout << "Choose: \n1 for a local multiplayer game\n2 for a player vs computer game\n"; cin >> choice;
 		switch (choice)
 		{
 		case 1:PlayerVsPlayer(); break;
 		case 2:PlayerVsComputer(); break;
 		default: break;
 		}
-	} while (1);
+	} while (choice == 1 || choice == 2);
 	system("PAUSE");
 }
 
@@ -44,7 +53,7 @@ void chooseSign()
 			playerTwo = 'X';
 		}
 		else if (playerOne == '0')
-			main();
+			game();
 		else
 		{
 			cout << "Choose again.\n";
@@ -108,7 +117,7 @@ void playMove(char MoveToPrint, char TicTacToe[3][3])
 	case 2:checkLocation(TicTacToe, 2, 1, MoveToPrint); break;
 	case 3:checkLocation(TicTacToe, 2, 2, MoveToPrint); break;
 	case 0:PlayerVsPlayer(); break;
-	case -1:main(); break;
+	case -1:game(); break;
 	}
 }
 
@@ -131,6 +140,7 @@ void checkWinner(char TicTacToe[3][3])
 
 void PlayerVsPlayer()
 {
+	system("CLS");
 	char TicTacToe[3][3];
 	int moveNumber = 0;
 	char moveToPrint;
@@ -149,5 +159,7 @@ void PlayerVsPlayer()
 
 void PlayerVsComputer()
 {
+	system("CLS");
 	cout << "In development :)\n";
+	int pause; cin >> pause;
 }
