@@ -10,9 +10,9 @@ void printBoard(char TicTacToe[3][3]);
 void populateMatrix(char TicTacToe[3][3]);
 void printStatus(char MoveToPrint, int MoveNumber);
 char checkMove(int moveNumber);
-void playMove(char MoveToPrint, char TicTacToe[3][3]);
-void checkLocation(char TicTacToe[3][3], int locationX, int locationY, char MoveToPrint);
-void checkWinner(char TicTacToe[3][3]);
+void playMove(char MoveToPrint, char TicTacToe[3][3], int *move);
+void checkLocation(char TicTacToe[3][3], int locationX, int locationY, char MoveToPrint, int move);
+void checkWinner(char TicTacToe[3][3], int move);
 void PlayerVsPlayer();
 void PlayerVsComputer();
 
@@ -99,7 +99,7 @@ char checkMove(int moveNumber)
 	return playerMove;
 }
 
-void playMove(char MoveToPrint, char TicTacToe[3][3])
+void playMove(char MoveToPrint, char TicTacToe[3][3], int *move)
 {
 	int location;
 	do{
@@ -107,35 +107,34 @@ void playMove(char MoveToPrint, char TicTacToe[3][3])
 	} while (location < -1 || location>9);
 	switch (location)
 	{
-	case 7:checkLocation(TicTacToe, 0, 0, MoveToPrint); break;
-	case 8:checkLocation(TicTacToe, 0, 1, MoveToPrint); break;
-	case 9:checkLocation(TicTacToe, 0, 2, MoveToPrint); break;
-	case 4:checkLocation(TicTacToe, 1, 0, MoveToPrint); break;
-	case 5:checkLocation(TicTacToe, 1, 1, MoveToPrint); break;
-	case 6:checkLocation(TicTacToe, 1, 2, MoveToPrint); break;
-	case 1:checkLocation(TicTacToe, 2, 0, MoveToPrint); break;
-	case 2:checkLocation(TicTacToe, 2, 1, MoveToPrint); break;
-	case 3:checkLocation(TicTacToe, 2, 2, MoveToPrint); break;
+	case 7:checkLocation(TicTacToe, 0, 0, MoveToPrint, *move); break;
+	case 8:checkLocation(TicTacToe, 0, 1, MoveToPrint, *move); break;
+	case 9:checkLocation(TicTacToe, 0, 2, MoveToPrint, *move); break;
+	case 4:checkLocation(TicTacToe, 1, 0, MoveToPrint, *move); break;
+	case 5:checkLocation(TicTacToe, 1, 1, MoveToPrint, *move); break;
+	case 6:checkLocation(TicTacToe, 1, 2, MoveToPrint, *move); break;
+	case 1:checkLocation(TicTacToe, 2, 0, MoveToPrint, *move); break;
+	case 2:checkLocation(TicTacToe, 2, 1, MoveToPrint, *move); break;
+	case 3:checkLocation(TicTacToe, 2, 2, MoveToPrint, *move); break;
 	case 0:PlayerVsPlayer(); break;
 	case -1:game(); break;
 	}
+	*move = location;
 }
 
-void checkLocation(char TicTacToe[3][3], int locationY, int locationX, char MoveToPrint)
+void checkLocation(char TicTacToe[3][3], int locationY, int locationX, char MoveToPrint, int move)
 {
-	int a;
 	if (TicTacToe[locationY][locationX] == ' ')
 		TicTacToe[locationY][locationX] = MoveToPrint;
 	else
 	{
 		cout << "Already taken! ";
-		playMove(MoveToPrint, TicTacToe);
+		playMove(MoveToPrint, TicTacToe, &move);
 	}
 }
 
-void checkWinner(char TicTacToe[3][3])
+void checkWinner(char TicTacToe[3][3], int move)
 {
-
 }
 
 void PlayerVsPlayer()
@@ -143,6 +142,7 @@ void PlayerVsPlayer()
 	system("CLS");
 	char TicTacToe[3][3];
 	int moveNumber = 0;
+	int move = 0;
 	char moveToPrint;
 	chooseSign();
 	populateMatrix(TicTacToe);
@@ -150,11 +150,12 @@ void PlayerVsPlayer()
 		printBoard(TicTacToe);
 		moveToPrint = checkMove(moveNumber);
 		printStatus(moveToPrint, moveNumber);
-		playMove(moveToPrint, TicTacToe);
+		playMove(moveToPrint, TicTacToe, &move);
 		printBoard(TicTacToe);
-		checkWinner(TicTacToe);
+		checkWinner(TicTacToe, move);
 		moveNumber++;
 	} while (moveNumber < 9);
+	system("PAUSE");
 }
 
 void PlayerVsComputer()
