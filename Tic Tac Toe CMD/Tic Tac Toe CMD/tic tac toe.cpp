@@ -12,7 +12,7 @@ void printStatus(char MoveToPrint, int MoveNumber);
 char checkMove(int moveNumber);
 void playMove(char MoveToPrint, char TicTacToe[3][3]);
 void checkLocation(char TicTacToe[3][3], int locationX, int locationY, char MoveToPrint);
-void checkWinner(char TicTacToe[3][3]);
+void checkWinner(char TicTacToe[3][3], int MoveNumber);
 void PlayerVsPlayer();
 void PlayerVsComputer();
 
@@ -132,22 +132,23 @@ void checkLocation(char TicTacToe[3][3], int locationY, int locationX, char Move
 	}
 }
 
-void checkWinner(char TicTacToe[3][3])
+void checkWinner(char TicTacToe[3][3], int MoveNumber)
 {
 	char Winner = ' ';
-		if (TicTacToe[0][0] == TicTacToe[0][1] == TicTacToe[0][2] || 
-			TicTacToe[0][0] == TicTacToe[1][0] == TicTacToe[2][0] || 
-			TicTacToe[0][0] == TicTacToe[1][1] == TicTacToe[2][2])
-			Winner = TicTacToe[0][0];
-		if (TicTacToe[1][1] == TicTacToe[0][2] == TicTacToe[2][0] || 
-			TicTacToe[0][1] == TicTacToe[1][1] == TicTacToe[2][1] || 
-			TicTacToe[1][0] == TicTacToe[1][1] == TicTacToe[1][2])
-			Winner = TicTacToe[1][1];
-		if (TicTacToe[2][0] == TicTacToe[2][1] == TicTacToe[0][2] || 
-			TicTacToe[0][2] == TicTacToe[1][2] == TicTacToe[2][2])
+	if (TicTacToe[0][0] == TicTacToe[0][1] && TicTacToe[0][1] == TicTacToe[0][2] ||
+		TicTacToe[0][0] == TicTacToe[1][0] && TicTacToe[1][0] == TicTacToe[2][0] ||
+		TicTacToe[0][0] == TicTacToe[1][1] && TicTacToe[1][1] == TicTacToe[2][2])
+		Winner = TicTacToe[0][0];
+	else if (TicTacToe[1][1] == TicTacToe[0][2] && TicTacToe[0][2] == TicTacToe[2][0] ||
+		TicTacToe[0][1] == TicTacToe[1][1] && TicTacToe[1][1] == TicTacToe[2][1] ||
+		TicTacToe[1][0] == TicTacToe[1][1] && TicTacToe[1][1] == TicTacToe[1][2])
+		Winner = TicTacToe[1][1];
+	else if (TicTacToe[2][0] == TicTacToe[2][1] && TicTacToe[2][1] == TicTacToe[2][2] ||
+		TicTacToe[0][2] == TicTacToe[1][2] && TicTacToe[1][2] == TicTacToe[2][2])
 			Winner = TicTacToe[2][2];
 	else
 		Winner = ' ';
+
 	cout << "The winner is: " << Winner << ".\n";
 }
 
@@ -161,12 +162,12 @@ void PlayerVsPlayer()
 	populateMatrix(TicTacToe);
 	do{
 		printBoard(TicTacToe);
-		checkWinner(TicTacToe);
+		checkWinner(TicTacToe, moveNumber);
 		moveToPrint = checkMove(moveNumber);
 		printStatus(moveToPrint, moveNumber);
 		playMove(moveToPrint, TicTacToe);
 		printBoard(TicTacToe);
-		checkWinner(TicTacToe);
+		checkWinner(TicTacToe, moveNumber);
 		moveNumber++;
 	} while (moveNumber < 9);
 	system("PAUSE");
